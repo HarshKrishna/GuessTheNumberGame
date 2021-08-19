@@ -1,24 +1,65 @@
-// Remember, we're gonna use strict mode in all scripts now!
 'use strict';
 
-// const hello = 37;
-// console.log(hello);
+let number = Math.trunc(Math.random()*21);
+console.log(number);
+let score =20;
+let highScore=0;
 
-const printForecast = function (arr) {
-  let forcastString = '';
-  //debugger;
-  for (let i = 0; i < arr.length; i++) {
-    //   forcastString = forcastString + `... ${arr[i]}• in day ${(i = 1)}`;
-    forcastString =
-      forcastString + '... ' + arr[i] + '•C in ' + (i + 1) + ' days ';
-    console.log(forcastString);
-  }
+document.querySelector('.check').addEventListener('click', function(){
+    //debugger;
+    let guess = document.querySelector('.guess').value;
 
-  return forcastString + '...';
-};
+    if(!guess){
+        if (score >1){
+            document.querySelector('.message').textContent = '😢 No Number!';            
+            score--;
+            document.querySelector('.score').textContent = score;
+            return false;
+        }
+        else{
+            document.querySelector('.message').textContent = '😭 You Lose!';
+        }
+    }
+    if(guess>number){
+        if (score >1){
+            document.querySelector('.message').textContent = '👆 Too High!';
+            score--;
+            document.querySelector('.score').textContent = score;
+        }else{
+            document.querySelector('.message').textContent = '😭 You Lose!';
+        }
+    }
+    if(guess<number){
+        if (score >1){
+            document.querySelector('.message').textContent = '👇 Too Low!';
+            score--;
+            document.querySelector('.score').textContent = score;
+        }
+        else{
+            document.querySelector('.message').textContent = '😭 You Lose!';
+        }
+    }
+    if(guess==number){
+        document.querySelector('.message').textContent = '🏆 You Win! 🏆';
+        document.querySelector('body').style.backgroundColor='#33cc33';
+        document.querySelector('.number').textContent = number;
+        document.querySelector('.number').style.width = '50rem';
+        if(score>highScore){
+            highScore = score;
+        }
+        document.querySelector('.highscore').textContent = highScore;
+    }
+}
+);
 
-const temps = new Array(17, 21, 23);
-console.log('Forecast is :' + printForecast(temps));
 
-const temps2 = new Array(12, 5, -5, 0, 4);
-console.log('Forecast is :' + printForecast(temps2));
+document.querySelector('.again').addEventListener('click', function(){
+    score = 20;
+    number = Math.trunc(Math.random()*21);
+    document.querySelector('.score').textContent = 20;
+    document.querySelector('.message').textContent = 'Start Guessing...';
+    document.querySelector('body').style.backgroundColor='#222';
+    document.querySelector('.number').textContent = '?';
+    document.querySelector('.number').style.width = '15rem';
+    document.querySelector('.guess').value = '';
+});
